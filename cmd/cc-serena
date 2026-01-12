@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# cc-serena: 为当前项目启动 Serena 并打开 Claude
+
+PROJECT_DIR="${1:-$(pwd)}"
+PROJECT_DIR=$(cd "$PROJECT_DIR" && pwd)
+
+echo "正在为项目配置 Serena: $PROJECT_DIR"
+
+claude mcp add serena -- uvx \
+    --from git+https://github.com/oraios/serena \
+    serena start-mcp-server \
+    --context claude-code \
+    --project "$PROJECT_DIR"
+
+echo "正在启用 Serena..."
+
+echo "✓ Serena 已配置并启用！正在打开 Claude..."
+
+cd "$PROJECT_DIR"
+claude
